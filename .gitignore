@@ -1,0 +1,15 @@
+# Entorno local de Moodle y datos persistentes
+.moodle-runtime/
+moodledata/
+config.php
+*.sql
+*.sql.gz
+
+# Sistema/editor
+.DS_Store
+Thumbs.db
+.vscode/
+
+# Copias temporales; la copia publicada vive solo en backups/curso-latest.mbz
+*.mbz
+!backups/curso-latest.mbz

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Publicar respaldo Moodle"
+  short_description: "Sube la copia .mbz aprobada al repo"
+  default_prompt: "Publica el respaldo .mbz del curso en el repositorio GitHub del proyecto."
