@@ -8,6 +8,8 @@ Requisitos: Git y Docker Desktop (Windows/macOS) o Docker Engine + Compose (Linu
 
 > **Versión:** el aula real (aulasvirtuales.udistrital.edu.co) usa **Moodle 5.1**, el formato de curso **Tiles (mosaicos)** y el tema **Moove**. El Moodle local debe ser la misma versión, porque una copia `.mbz` hecha en una versión más nueva no se puede restaurar en una más vieja. Si ya instalaste otra versión, borra `.moodle-runtime/moodle` y los volúmenes de Docker y vuelve a ejecutar el script. Para que el curso se vea igual que en el real, instalen también los plugins `format_tiles` y `theme_moove` en la versión compatible con 5.1; sin ellos, el curso se restaura con el formato por defecto.
 
+**Empiecen por [`GUIA_EQUIPO_MOODLE.md`](GUIA_EQUIPO_MOODLE.md):** versión que funciona, cómo montar el Moodle de prueba y qué le toca a cada quien.
+
 Organización del contenido: las carpetas `Grupo_XX_*` tienen las entregas de cada grupo, `transcripciones/` su texto y `ESTADO_Y_REPARTO.md` el estado y quién monta qué.
 
 Desde la raíz del repositorio, ejecuta el script de tu sistema:
