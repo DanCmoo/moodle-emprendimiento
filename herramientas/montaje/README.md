@@ -78,13 +78,24 @@ Tomadas de [udistrital.edu.co](https://www.udistrital.edu.co/inicio) por indicac
 | Títulos y texto | Montserrat (respaldo: Helvetica Neue, Arial) |
 | Acento serif (frase del banner) | Lora cursiva (respaldo: Georgia) |
 
-Moodle limpia `<style>` y `<link>` de etiquetas y páginas, así que **las fuentes se cargan desde el tema**. En el aula real (tema Moove): *Administración del sitio → Apariencia → Temas → Moove → Avanzado → SCSS sin procesar*, agregar:
+Moodle limpia `<style>` y `<link>` de etiquetas y páginas, así que **el diseño del sitio y las fuentes van en el tema**. Ojo: un `@import` de Google Fonts dentro del SCSS de Moodle **no compila** y hace que el tema ignore todo el SCSS adicional; por eso Montserrat se carga con el ajuste propio de Moove y Lora con «HTML adicional».
 
-```scss
-@import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;600;700&display=swap");
-```
+### Moodle de prueba
 
-Sin ese paso el contenido se ve igual pero con Helvetica/Arial y Georgia. En el Moodle local ya está puesto en Boost (`theme_boost | scss`), junto con el color de marca `#8C1919`.
+`bash herramientas/montaje/tema_ud.sh` instala Moove 5.1.2 (el mismo tema del aula real, verificado por MD5) y aplica los ajustes de abajo. Resultado: todo el sitio en Montserrat, botones y barra secundaria en vino, franja oscura arriba, fondo `#F6F6F4` y enlaces en vino y rojo UD.
+
+### Aula real (cuando el curso de prueba esté aprobado)
+
+Son ajustes de **todo el sitio**, no solo de este curso; confírmalos antes con quien administra el aula.
+
+| Dónde | Ajuste | Valor |
+|---|---|---|
+| Apariencia → Temas → Moove → General | Color de marca | `#8C1919` |
+| Apariencia → Temas → Moove → General | Fuente del sitio | Montserrat |
+| Apariencia → Temas → Moove → Avanzado | SCSS sin procesar | contenido de `tema_ud.scss` |
+| Apariencia → HTML adicional | Dentro de HEAD | la línea `<link …Lora…>` de `tema_ud.sh` |
+
+Sin estos ajustes el contenido montado se ve igual de ordenado, pero con Helvetica/Arial y Georgia en vez de Montserrat y Lora.
 
 ## Decisiones tomadas al montar
 

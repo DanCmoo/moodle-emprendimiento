@@ -1,0 +1,13 @@
+// Inspirado en udistrital.edu.co: vino #8C1919, rojo #950D16, franja #192129, Montserrat.
+// Va en Moove → Avanzado → SCSS sin procesar.
+$ud-vino: #8C1919;
+$ud-rojo: #950D16;
+$ud-oscuro: #192129;
+.navbar.fixed-top { border-top: 4px solid $ud-oscuro; }
+body { color: #262626; }
+#page.drawers, #page-wrapper #page { background-color: #F6F6F4; }
+a { color: $ud-vino; }
+a:hover, a:focus { color: $ud-rojo; }
+h1, h2, h3, .h1, .h2, .h3 { color: #262626; font-weight: 700; }
+.courseindex .courseindex-item.pageitem { background-color: rgba($ud-vino, .08); color: $ud-vino; }
+.btn-primary:hover { background-color: $ud-rojo; border-color: $ud-rojo; }
