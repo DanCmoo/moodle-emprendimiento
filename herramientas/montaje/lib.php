@@ -94,6 +94,7 @@ function mt_cm(stdClass $course, int $sectionnum, string $modname, string $match
  * No usa html_to_text porque esa función pone los títulos en MAYÚSCULAS y con guiones bajos.
  */
 function mt_label_name(string $html): string {
+    $html = preg_replace('~<a class="eidti-ampliar nomediaplugin".*?</a>~s', '', $html);  // «Ampliar imagen» no es parte del nombre
     $name = html_entity_decode(strip_tags(str_replace('<', ' <', $html)), ENT_QUOTES | ENT_HTML5, 'UTF-8');
     $name = preg_replace('/@@PLUGINFILE@@\/[[:^space:]]+/i', '', $name);
     $name = trim(preg_replace('/\s+/u', ' ', $name));
@@ -290,8 +291,52 @@ function mt_find_by_name(stdClass $course, int $sectionnum, string $modname, str
     return null;
 }
 
+/**
+ * Envuelve cada imagen del curso en un enlace que la abre en tamaño completo en una pestaña nueva,
+ * con un texto «Ampliar imagen» debajo (en celular nadie adivina que la imagen se puede tocar).
+ * Se salta la foto del docente y las imágenes que ya están dentro de un enlace.
+ */
+function mt_imagenes_ampliables(string $html): string {
+    // Texto alternativo: quita saltos de línea pegados («Mapa Unidad 1\n») y nombra la imagen de resultados.
+    $html = preg_replace('~alt="Mapa Unidad (\d)\s*"~', 'alt="Mapa de la unidad $1"', $html);
+    $html = str_replace('src="@@PLUGINFILE@@/Resultados.png" alt=""', 'src="@@PLUGINFILE@@/Resultados.png" alt="Resultados de aprendizaje de la unidad"', $html);
+    $html = str_replace('alt="Resultados de aprendizaje de la unidad" width="1408" height="768" role="presentation"',
+        'alt="Resultados de aprendizaje de la unidad" width="1408" height="768"', $html);
+    return preg_replace_callback('~(<a\b[^>]*>\s*)?(<img\b[^>]*\bsrc="(@@PLUGINFILE@@/[^"]+)"[^>]*>)~i', function($m) {
+        if ($m[1] !== '' || str_contains($m[2], 'Fotografía del docente') || str_contains($m[2], 'Foto Profesor')) {
+            return $m[0];
+        }
+        $img = preg_replace('~\bstyle="~', 'style="cursor:zoom-in;', $m[2], 1, $n);
+        if (!$n) {
+            $img = str_replace('<img ', '<img style="cursor:zoom-in;" ', $img);
+        }
+        return '<a class="eidti-ampliar" href="' . $m[3] . '" target="_blank" rel="noopener" title="Abrir la imagen en tamaño completo">' . $img .
+            '</a><br><a class="eidti-ampliar nomediaplugin" href="' . $m[3] . '" target="_blank" rel="noopener" style="font-size:14px;">' .
+            '<i class="fa fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i>&nbsp;Ampliar imagen (se abre en una pestaña nueva)</a>';
+    }, $html);
+}
+
 function mt_done(stdClass $course): void {
     global $DB;
+    // Imágenes ampliables en etiquetas, resúmenes de sección y páginas (se hace al final de cada script).
+    foreach ($DB->get_records('label', ['course' => $course->id], '', 'id, intro') as $l) {
+        $nuevo = mt_imagenes_ampliables($l->intro);
+        if ($nuevo !== $l->intro) {
+            $DB->set_field('label', 'intro', $nuevo, ['id' => $l->id]);
+        }
+    }
+    foreach ($DB->get_records('course_sections', ['course' => $course->id], '', 'id, summary') as $s) {
+        $nuevo = mt_imagenes_ampliables((string)$s->summary);
+        if ($nuevo !== (string)$s->summary) {
+            $DB->set_field('course_sections', 'summary', $nuevo, ['id' => $s->id]);
+        }
+    }
+    foreach ($DB->get_records('page', ['course' => $course->id], '', 'id, content') as $p) {
+        $nuevo = mt_imagenes_ampliables((string)$p->content);
+        if ($nuevo !== (string)$p->content) {
+            $DB->set_field('page', 'content', $nuevo, ['id' => $p->id]);
+        }
+    }
     // Recalcula el nombre de todas las etiquetas (es el texto que se ve en el índice del curso).
     foreach ($DB->get_records('label', ['course' => $course->id], '', 'id, intro, name') as $l) {
         $nombre = mt_label_name($l->intro);

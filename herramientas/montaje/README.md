@@ -97,6 +97,10 @@ Son ajustes de **todo el sitio**, no solo de este curso; confírmalos antes con 
 
 Sin estos ajustes el contenido montado se ve igual de ordenado, pero con Helvetica/Arial y Georgia en vez de Montserrat y Lora.
 
+## Imágenes ampliables
+
+Al final de cada script (`mt_done`), toda imagen del curso queda envuelta en un enlace que la abre en tamaño completo en una pestaña nueva, con el texto «Ampliar imagen (se abre en una pestaña nueva)» debajo y cursor de lupa. Aplica a los mapas de las cuatro unidades, el esquema del plan de trabajo, el mapa mental del curso y la imagen de resultados de aprendizaje; la foto del docente se deja igual. También se corrige su texto alternativo («Mapa de la unidad 1», etc.).
+
 ## Decisiones tomadas al montar
 
 - **Derechos de autor:** no se enlazan copias completas de libros comerciales alojadas en sitios de terceros (theoffice.pe, camarabaq.org.co, archive.org, elhacker.info, drives personales) ni Sci-Hub. Quedan la referencia y la indicación de consultar el Sistema de Bibliotecas UD.
