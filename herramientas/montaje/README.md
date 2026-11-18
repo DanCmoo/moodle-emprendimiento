@@ -99,7 +99,7 @@ Sin estos ajustes el contenido montado se ve igual de ordenado, pero con Helveti
 
 ## Imágenes ampliables
 
-Al final de cada script (`mt_done`), toda imagen del curso queda envuelta en un enlace que la abre en tamaño completo en una pestaña nueva, con el texto «Ampliar imagen (se abre en una pestaña nueva)» debajo y cursor de lupa. Aplica a los mapas de las cuatro unidades, el esquema del plan de trabajo, el mapa mental del curso y la imagen de resultados de aprendizaje; la foto del docente se deja igual. También se corrige su texto alternativo («Mapa de la unidad 1», etc.).
+Al final de cada script (`mt_done`), toda imagen del curso se vuelve ampliable: al tocarla, o el enlace «Ampliar imagen» de abajo, se abre grande en una **ventana emergente dentro del mismo curso**. Se cierra con la ✕, con el botón «Cerrar», tocando fuera o con Esc, y el estudiante sigue en el mismo lugar. En celular la ventana ocupa toda la pantalla y la imagen se muestra a 900 px mínimo, deslizando de lado; también tiene un botón «Abrir en una pestaña nueva». Usa las ventanas modales de Bootstrap que ya trae el tema, porque Moodle quita el JavaScript escrito en etiquetas. Aplica a los mapas de las cuatro unidades, el esquema del plan de trabajo, el mapa mental del curso y la imagen de resultados de aprendizaje; la foto del docente se deja igual. También se corrige su texto alternativo («Mapa de la unidad 1», etc.).
 
 ## Decisiones tomadas al montar
 

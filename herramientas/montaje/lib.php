@@ -94,7 +94,8 @@ function mt_cm(stdClass $course, int $sectionnum, string $modname, string $match
  * No usa html_to_text porque esa función pone los títulos en MAYÚSCULAS y con guiones bajos.
  */
 function mt_label_name(string $html): string {
-    $html = preg_replace('~<a class="eidti-ampliar nomediaplugin".*?</a>~s', '', $html);  // «Ampliar imagen» no es parte del nombre
+    // «Ampliar imagen» y la ventana de la imagen ampliada no son parte del nombre.
+    $html = preg_replace(['~<a class="eidti-ampliar eidti-ampliar-texto.*?</a>~s', '~<div class="modal fade eidti-modal".*?data-bs-dismiss="modal">Cerrar</button></div></div></div></div>~s'], '', $html);
     $name = html_entity_decode(strip_tags(str_replace('<', ' <', $html)), ENT_QUOTES | ENT_HTML5, 'UTF-8');
     $name = preg_replace('/@@PLUGINFILE@@\/[[:^space:]]+/i', '', $name);
     $name = trim(preg_replace('/\s+/u', ' ', $name));
@@ -292,9 +293,10 @@ function mt_find_by_name(stdClass $course, int $sectionnum, string $modname, str
 }
 
 /**
- * Envuelve cada imagen del curso en un enlace que la abre en tamaño completo en una pestaña nueva,
- * con un texto «Ampliar imagen» debajo (en celular nadie adivina que la imagen se puede tocar).
- * Se salta la foto del docente y las imágenes que ya están dentro de un enlace.
+ * Hace ampliable cada imagen del curso: al tocarla (o el enlace «Ampliar imagen» de abajo) se abre grande en
+ * una ventana emergente del mismo curso, que se cierra con la ✕, el botón «Cerrar», tocando fuera o con Esc.
+ * Usa las ventanas modales de Bootstrap que ya trae el tema (Moodle quita el JavaScript escrito en etiquetas).
+ * Se salta la foto del docente, la imagen grande de la ventana y las imágenes que ya están dentro de un enlace.
  */
 function mt_imagenes_ampliables(string $html): string {
     // Texto alternativo: quita saltos de línea pegados («Mapa Unidad 1\n») y nombra la imagen de resultados.
@@ -303,16 +305,32 @@ function mt_imagenes_ampliables(string $html): string {
     $html = str_replace('alt="Resultados de aprendizaje de la unidad" width="1408" height="768" role="presentation"',
         'alt="Resultados de aprendizaje de la unidad" width="1408" height="768"', $html);
     return preg_replace_callback('~(<a\b[^>]*>\s*)?(<img\b[^>]*\bsrc="(@@PLUGINFILE@@/[^"]+)"[^>]*>)~i', function($m) {
-        if ($m[1] !== '' || str_contains($m[2], 'Fotografía del docente') || str_contains($m[2], 'Foto Profesor')) {
+        if ($m[1] !== '' || str_contains($m[2], 'eidti-img-grande') ||
+                str_contains($m[2], 'Fotografía del docente') || str_contains($m[2], 'Foto Profesor')) {
             return $m[0];
         }
+        $src = $m[3];
+        $id = 'eidti-img-' . substr(md5($src), 0, 10);
+        $alt = preg_match('~\balt="([^"]*)"~', $m[2], $a) && trim($a[1]) !== '' ? trim($a[1]) : 'Imagen del curso';
         $img = preg_replace('~\bstyle="~', 'style="cursor:zoom-in;', $m[2], 1, $n);
         if (!$n) {
             $img = str_replace('<img ', '<img style="cursor:zoom-in;" ', $img);
         }
-        return '<a class="eidti-ampliar" href="' . $m[3] . '" target="_blank" rel="noopener" title="Abrir la imagen en tamaño completo">' . $img .
-            '</a><br><a class="eidti-ampliar nomediaplugin" href="' . $m[3] . '" target="_blank" rel="noopener" style="font-size:14px;">' .
-            '<i class="fa fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i>&nbsp;Ampliar imagen (se abre en una pestaña nueva)</a>';
+        $abrir = 'href="#' . $id . '" data-bs-toggle="modal" data-bs-target="#' . $id . '" role="button"';
+        return '<a class="eidti-ampliar" ' . $abrir . ' title="Ver la imagen ampliada">' . $img . '</a><br>' .
+            '<a class="eidti-ampliar eidti-ampliar-texto nomediaplugin" ' . $abrir . ' style="font-size:14px;">' .
+            '<i class="fa fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i>&nbsp;Ampliar imagen</a>' .
+            '<div class="modal fade eidti-modal" id="' . $id . '" tabindex="-1" aria-label="' . $alt . '" aria-hidden="true">' .
+            '<div class="modal-dialog modal-dialog-centered modal-xl modal-fullscreen-md-down"><div class="modal-content">' .
+            '<div class="modal-header" style="border-bottom:3px solid ' . MT_VINO . ';">' .
+            '<h5 class="modal-title" style="color:' . MT_VINO . ';font-family:' . MT_FUENTE . ';font-weight:700;' . MT_NOBAR . '">' . $alt . '</h5>' .
+            '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button></div>' .
+            // En pantallas angostas la imagen mantiene al menos 900 px y se recorre deslizando de lado.
+            '<div class="modal-body p-2" style="overflow:auto;"><img class="eidti-img-grande" style="display:block;margin:0 auto;width:max(100%,900px);max-width:none;height:auto;" src="' . $src . '" alt="' . $alt . '"></div>' .
+            '<div class="modal-footer"><a class="nomediaplugin btn btn-outline-secondary" href="' . $src . '" target="_blank" rel="noopener">' .
+            '<i class="fa fa-solid fa-up-right-from-square" aria-hidden="true"></i>&nbsp;Abrir en una pestaña nueva</a>' .
+            '<button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button></div>' .
+            '</div></div></div>';
     }, $html);
 }
 
