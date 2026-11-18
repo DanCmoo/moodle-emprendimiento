@@ -21,3 +21,6 @@ desktop.ini
 
 # Copias del curso y videos extraídos (pesados, no van a git)
 Copia moodle/
+
+# Entregas originales de los grupos: no se suben al repositorio (se comparten aparte)
+Grupo_*/

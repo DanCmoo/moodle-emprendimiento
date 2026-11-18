@@ -10,7 +10,7 @@ Requisitos: Git y Docker Desktop (Windows/macOS) o Docker Engine + Compose (Linu
 
 **Empiecen por [`GUIA_EQUIPO_MOODLE.md`](GUIA_EQUIPO_MOODLE.md):** versión que funciona, cómo montar el Moodle de prueba y qué le toca a cada quien.
 
-Organización del contenido: las carpetas `Grupo_XX_*` tienen las entregas de cada grupo, `transcripciones/` su texto y `ESTADO_Y_REPARTO.md` el estado y quién monta qué.
+Organización del contenido: `transcripciones/` tiene el texto de la entrega de cada grupo y `ESTADO_Y_REPARTO.md` el estado y quién monta qué. Las carpetas originales de los grupos (`Grupo_XX_*`, con sus Word, PDF e imágenes) **no se suben al repositorio**: pídanselas a Felipe y pónganlas en la raíz del proyecto, porque los scripts de montaje toman de ahí algunos archivos.
 
 Desde la raíz del repositorio, ejecuta el script de tu sistema:
 

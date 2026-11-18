@@ -34,8 +34,8 @@ Requisitos: Git, Docker Desktop **encendido** y Git Bash.
 4. **Poner el código de Moodle en un volumen de Docker** y luego instalar Moodle con el comando del [README](README.md). En Windows, leer el código desde la carpeta hace que la instalación tarde más de una hora; con el volumen tarda unos 2 minutos. Los pasos exactos están en [`herramientas/montaje/README.md`](herramientas/montaje/README.md), sección «Código de Moodle en un volumen de Docker».
 5. **Aplicar el diseño UD** (tema Moove, vino, Montserrat y Lora): `bash herramientas/montaje/tema_ud.sh`
 6. **Restaurar el curso real y montar todo:**
-   - Pidan a Felipe la copia `copia_de_seguridad-…-nu.mbz` (sin usuarios, 75 MB). No está en Git por su tamaño.
-   - Pónganla en la carpeta `Copia moodle/`.
+   - Pidan a Felipe dos cosas que **no están en el repositorio**: la copia `copia_de_seguridad-…-nu.mbz` (sin usuarios, 75 MB) y las carpetas de los grupos `Grupo_XX_*`, con sus Word, PDF e imágenes.
+   - Pongan la copia en la carpeta `Copia moodle/` y las carpetas de los grupos en la raíz del proyecto. Los scripts toman de ahí, por ejemplo, el syllabus del grupo 6 y el caso de financiación del grupo 12.
    - Ejecuten:
      ```bash
      REINICIAR=1 bash herramientas/montaje/montar.sh
