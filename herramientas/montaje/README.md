@@ -97,6 +97,10 @@ Son ajustes de **todo el sitio**, no solo de este curso; confírmalos antes con 
 
 Sin estos ajustes el contenido montado se ve igual de ordenado, pero con Helvetica/Arial y Georgia en vez de Montserrat y Lora.
 
+## Ruta formativa (plan de trabajo)
+
+El esquema del grupo 4 (`PlanDeTrabajoImagen.png`) se rehízo en HTML con el diseño UD (`g04_ruta()` en `g04_presentacion_curso.php`). El texto queda nítido y las tarjetas de los 4 módulos se acomodan solas: en fila en computador, de a dos en tableta y una debajo de otra en celular. Aparece en el acordeón «Plan de trabajo» y en la página «Plan de trabajo y cronograma». Las semanas siguen el cronograma del grupo (semana 1 de encuentro inicial; la imagen original ponía el Módulo 1 en las semanas 1 a 4) y los 4 créditos salen del syllabus AA-FR-003.
+
 ## Imágenes ampliables
 
 Al final de cada script (`mt_done`), toda imagen del curso se vuelve ampliable: al tocarla, o el enlace «Ampliar imagen» de abajo, se abre grande en una **ventana emergente dentro del mismo curso**. Se cierra con la ✕, con el botón «Cerrar», tocando fuera o con Esc, y el estudiante sigue en el mismo lugar. En celular la ventana ocupa toda la pantalla y la imagen se muestra a 900 px mínimo, deslizando de lado; también tiene un botón «Abrir en una pestaña nueva». Usa las ventanas modales de Bootstrap que ya trae el tema, porque Moodle quita el JavaScript escrito en etiquetas. Aplica a los mapas de las cuatro unidades, el esquema del plan de trabajo, el mapa mental del curso y la imagen de resultados de aprendizaje; la foto del docente se deja igual. También se corrige su texto alternativo («Mapa de la unidad 1», etc.).

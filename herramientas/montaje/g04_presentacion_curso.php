@@ -30,14 +30,57 @@ if (!str_contains($html, 'eidti-nombre')) {
     $html = '<span class="eidti-nombre visually-hidden">Presentación del curso:</span>' . $html;
 }
 
-// 3.1 · Plan de trabajo: texto nuevo (se elimina el texto pegado desde Gemini con su botón de cita) y esquema gráfico nuevo.
-$img = mt_add_intro_file($cm, MT_ENTREGAS . '/Grupo_04_Tarea_03/PlanDeTrabajoImagen.png', 'Plan_de_trabajo_esquema.png');
+// 3.1 · Esquema «Ruta formativa» del grupo 4 (PlanDeTrabajoImagen.png), rehecho en HTML con el diseño UD:
+// el texto queda nítido y las tarjetas se acomodan solas (4 en fila, 2 en tableta, 1 en celular).
+// Semanas según el cronograma del mismo grupo (la imagen original ponía el Módulo 1 en las semanas 1 a 4).
+function g04_ruta(): string {
+    $modulos = [
+        ['MÓDULO 1 · SEMANAS 2–4', 'Marcos y ecosistema del emprendimiento en TI', MT_OSCURO,
+            ['Entorno institucional y ecosistema emprendedor en Colombia.', 'Marco normativo aplicable (Leyes 590, 905, 1014 y 2069).',
+             'Mecanismos de financiación y opciones de grado en TI.', 'Modelos de negocio innovadores y océanos azules.'],
+            'Comprensión del contexto legal, institucional y financiero.'],
+        ['MÓDULO 2 · SEMANAS 5–8', 'Emprendimiento en TI y metodologías', MT_OSCURO,
+            ['Marcos ágiles: Lean Startup y Design Thinking.', 'Diseño de modelos con Business Model Canvas.',
+             'Formulación de la propuesta de valor centrada en el usuario.', 'Descubrimiento de clientes e identificación de nichos.'],
+            'Estructuración metodológica de la oportunidad de negocio.'],
+        ['MÓDULO 3 · SEMANAS 9–12', 'Validación de mercado, métricas e iteración', MT_OSCURO,
+            ['Validación temprana de clientes en entornos reales.', 'Diseño de producto mínimo viable (MVP) y prototipado.',
+             'Métricas de validación, aprendizaje y pivoteo.', 'Estrategias de marketing 3.0 y 4.0 y escalamiento.'],
+            'Contrastación con el mercado y ajuste del modelo propuesto.'],
+        ['MÓDULO 4 · SEMANAS 13–16', 'Industrias de TI y consolidación del plan', MT_VINO,
+            ['Verticales: fintech, healthtech, edtech, legaltech y afines.', 'Viabilidad técnica, operativa, legal y financiera.',
+             'Integración del documento del plan de negocio en TI.', 'Sustentación ejecutiva del proyecto desarrollado.'],
+            'Consolidación y presentación de un plan de negocio factible.'],
+    ];
+    $html = '<div class="eidti-ruta" role="group" aria-label="Ruta formativa del curso en cuatro módulos" style="font-family:' . MT_FUENTE . ';' .
+        'background:#F6F6F4;border:1px solid #DCDBDB;border-top:6px solid ' . MT_VINO . ';border-radius:10px;padding:20px;margin:16px 0;">' .
+        '<div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;align-items:flex-end;border-bottom:2px solid ' . MT_ROJO . ';padding-bottom:10px;margin-bottom:16px;">' .
+        '<div><p style="margin:0;color:' . MT_ROJO . ';font-weight:700;font-size:12px;letter-spacing:.1em;">PLAN DE TRABAJO ACADÉMICO · INGENIERÍA DE SISTEMAS</p>' .
+        '<p style="margin:4px 0 0;color:#262626;font-weight:700;font-size:22px;line-height:1.25;">Ruta formativa: Emprendimiento e Ideas de Negocio en TI</p></div>' .
+        '<p style="margin:0;color:#606060;font-family:' . MT_SERIF . ';font-style:italic;font-size:14px;">Universidad Distrital Francisco José de Caldas<br>16 semanas · 4 módulos · 4 créditos</p></div>' .
+        '<div class="row g-3">';
+    foreach ($modulos as [$etiqueta, $titulo, $color, $temas, $enfoque]) {
+        $html .= '<div class="col-12 col-md-6 col-xl-3"><div style="height:100%;display:flex;flex-direction:column;background:#FFFFFF;border:1px solid #DCDBDB;border-top:5px solid ' . $color . ';border-radius:8px;padding:14px;">' .
+            '<span style="align-self:flex-start;background:' . $color . ';color:#FFFFFF;font-weight:700;font-size:11px;letter-spacing:.08em;border-radius:4px;padding:3px 8px;">' . $etiqueta . '</span>' .
+            '<p style="margin:10px 0 8px;color:' . MT_VINO . ';font-weight:700;font-size:16px;line-height:1.3;">' . $titulo . '</p>' .
+            '<ul style="margin:0 0 12px;padding-left:18px;color:#262626;font-size:14px;line-height:1.45;">' .
+            implode('', array_map(fn($t) => "<li style=\"margin-bottom:4px;\">$t</li>", $temas)) . '</ul>' .
+            '<p style="margin:auto 0 0;background:#F6F6F4;border-left:4px solid ' . MT_ROJO . ';padding:8px 10px;font-size:13px;color:#262626;">' .
+            '<strong>Enfoque del módulo:</strong> ' . $enfoque . '</p></div></div>';
+    }
+    $html .= '</div><div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px;margin-top:16px;background:' . MT_OSCURO .
+        ';color:#FFFFFF;border-radius:6px;padding:10px 14px;font-size:13px;"><span><strong>Semana 1:</strong> encuentro inicial y acuerdos de trabajo. ' .
+        'Desarrollo progresivo según los lineamientos del docente.</span><span>Syllabus AA-FR-003 · Facultad de Ingeniería</span></div></div>';
+    return $html;
+}
+
+// 3.1 · Plan de trabajo: texto nuevo (se elimina el texto pegado desde Gemini con su botón de cita) y la ruta formativa rehecha.
 $plan = '<div class="accordion-body py-2"><p style="' . $f . '">Nuestro plan de trabajo se desarrollará de manera progresiva a lo largo de cuatro módulos articulados con la estructura del aula virtual y el syllabus oficial de la asignatura:</p><ul style="' . $f . '">' .
     '<li><strong>Módulo 1. Marcos y ecosistema del emprendimiento en TI:</strong> analizaremos el entorno institucional, normativo y financiero que soporta la creación de empresas de base tecnológica en Colombia, junto con modelos de negocio innovadores.</li>' .
     '<li><strong>Módulo 2. Emprendimiento en TI y metodologías:</strong> abordaremos marcos ágiles como Lean Startup, Design Thinking y Business Model Canvas para formular propuestas de valor e iniciar el descubrimiento de clientes.</li>' .
     '<li><strong>Módulo 3. Validación de mercado, métricas e iteración:</strong> aplicaremos técnicas de validación temprana mediante prototipado, producto mínimo viable (MVP), métricas de aprendizaje y estrategias de marketing 3.0 y 4.0.</li>' .
     '<li><strong>Módulo 4. Industrias de TI y consolidación del plan de negocio:</strong> exploraremos verticales estratégicas (como fintech, healthtech, edtech o legaltech) para consolidar y sustentar un plan de negocio integral y factible, según las orientaciones acordadas con el docente.</li></ul>' .
-    '<p class="text-center"><img src="' . $img . '" alt="Esquema del plan de trabajo: los cuatro módulos del curso y su secuencia" class="img-fluid" style="max-width:900px;"></p>' .
+    g04_ruta() .
     '<p style="' . $f . '">Versión para consultar o imprimir: <a href="%%ENLACE_PLAN%%">Plan de trabajo y cronograma</a>.</p></div>';
 $html = preg_replace('~(id="collapseThree".*?>)\s*<div class="accordion-body py-2">.*?</div>\s*(</div>\s*</div>\s*<div class="accordion-item">)~s',
     '$1' . str_replace('$', '\$', $plan) . '$2', $html, 1, $c1);
@@ -66,7 +109,8 @@ mt_log($c2 ? 'cronograma reemplazado' : 'AVISO: no encontré el cronograma');
 // Se reemplaza por una página con el plan y el cronograma del grupo 4, y el PDF sale del curso.
 global $DB;
 $nombreplan = 'Plan de trabajo y cronograma';
-$contenidoplan = preg_replace(['~^<div class="accordion-body py-2">~', '~<p class="text-center"><img.*?</p>.*$~s'], '', $plan) .
+// La página lleva el texto del plan, la ruta formativa y el cronograma (sin el enlace a sí misma).
+$contenidoplan = preg_replace(['~^<div class="accordion-body py-2">~', '~<p[^>]*>Versión para consultar.*$~s'], '', $plan) .
     '<h4 style="color:#8C1919;font-family:\'Montserrat\',Arial,sans-serif;font-weight:700;' . MT_NOBAR . '">Cronograma general (16 semanas)</h4>' .
     preg_replace(['~^<div class="accordion-body py-2">~', '~</div>$~'], '', $tabla);
 if ($pg = mt_find_by_name($course, 7, 'page', $nombreplan)) {
