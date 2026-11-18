@@ -4,7 +4,11 @@ Repositorio del equipo para mantener una configuración común de Moodle, materi
 
 ## Moodle local con Docker
 
-Requisitos: Git y Docker Desktop (Windows/macOS) o Docker Engine + Compose (Linux). La configuración usa Moodle `MOODLE_503_STABLE`, PHP 8.3 y MariaDB 11.4, siguiendo el entorno de desarrollo de Moodle HQ. Confirmen con la universidad que su Moodle destino es compatible antes de entregar el curso.
+Requisitos: Git y Docker Desktop (Windows/macOS) o Docker Engine + Compose (Linux). La configuración usa Moodle `MOODLE_501_STABLE`, PHP 8.3 y MariaDB 11.4, siguiendo el entorno de desarrollo de Moodle HQ.
+
+> **Versión:** el aula real (aulasvirtuales.udistrital.edu.co) usa **Moodle 5.1**, el formato de curso **Tiles (mosaicos)** y el tema **Moove**. El Moodle local debe ser la misma versión, porque una copia `.mbz` hecha en una versión más nueva no se puede restaurar en una más vieja. Si ya instalaste otra versión, borra `.moodle-runtime/moodle` y los volúmenes de Docker y vuelve a ejecutar el script. Para que el curso se vea igual que en el real, instalen también los plugins `format_tiles` y `theme_moove` en la versión compatible con 5.1; sin ellos, el curso se restaura con el formato por defecto.
+
+Organización del contenido: las carpetas `Grupo_XX_*` tienen las entregas de cada grupo, `transcripciones/` su texto y `ESTADO_Y_REPARTO.md` el estado y quién monta qué.
 
 Desde la raíz del repositorio, ejecuta el script de tu sistema:
 

@@ -13,3 +13,11 @@ Thumbs.db
 # Copias temporales; la copia publicada vive solo en backups/curso-latest.mbz
 *.mbz
 !backups/curso-latest.mbz
+
+# Archivos temporales de Office
+~$*
+*.tmp
+desktop.ini
+
+# Copias del curso y videos extraídos (pesados, no van a git)
+Copia moodle/
