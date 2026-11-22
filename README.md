@@ -14,7 +14,9 @@ Se requiere Python 3.10 o posterior; el generador usa solo bibliotecas incluidas
 python tools/build_course_mbz.py
 ```
 
-El resultado es `Moodle-Emprendimiento-2026-3.mbz`. El script parte del respaldo Moodle 5.1.1, conserva la estructura de secciones y actividades existente, actualiza nombres y textos, incorpora el syllabus, mapas, lecturas, caso de financiación, paquete SCORM y materiales de cierre, y aplica los colores institucionales al contenido. Si falta un documento de entrada, se detiene indicando la ruta.
+El resultado es `Moodle-Emprendimiento-2026-3.mbz`. El script parte del respaldo Moodle 5.1.1, conserva la estructura de secciones y actividades existente, actualiza nombres y textos, e incorpora el syllabus, todos los mapas e infografías, lecturas, caso de financiación, paquete SCORM, ficha de actividad, plantillas visuales y materiales de cierre. Algunos documentos de trabajo se convierten a HTML para leerlos en Moodle. Si falta un documento de entrada, se detiene indicando la ruta.
+
+De los 79 archivos recibidos, 49 recursos didácticos y visuales se incorporan o transforman para el curso. Se dejan fuera 24 formularios de verificación de entregas, 5 capturas de errores y 1 registro interno de revisión estudiantil; son documentos administrativos, no recursos para el aula.
 
 ## Levantar Moodle con Docker
 
