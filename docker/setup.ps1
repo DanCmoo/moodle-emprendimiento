@@ -16,8 +16,8 @@ if (-not (Test-Path (Join-Path $dockerRepo '.git'))) {
     if ($LASTEXITCODE -ne 0) { throw 'No se pudo clonar moodle-docker.' }
 }
 if (-not (Test-Path (Join-Path $moodleRepo '.git'))) {
-    git clone --depth 1 --branch MOODLE_503_STABLE https://github.com/moodle/moodle.git $moodleRepo
-    if ($LASTEXITCODE -ne 0) { throw 'No se pudo clonar Moodle 5.3 estable.' }
+    git clone --depth 1 --branch MOODLE_501_STABLE https://github.com/moodle/moodle.git $moodleRepo
+    if ($LASTEXITCODE -ne 0) { throw 'No se pudo clonar Moodle 5.1 estable, compatible con Moodle-Copia.mbz.' }
 }
 
 $config = Join-Path $moodleRepo 'config.php'

@@ -15,7 +15,7 @@ if [[ ! -d "$docker_repo/.git" ]]; then
   git clone --depth 1 https://github.com/moodlehq/moodle-docker.git "$docker_repo"
 fi
 if [[ ! -d "$moodle_repo/.git" ]]; then
-  git clone --depth 1 --branch MOODLE_503_STABLE https://github.com/moodle/moodle.git "$moodle_repo"
+  git clone --depth 1 --branch MOODLE_501_STABLE https://github.com/moodle/moodle.git "$moodle_repo"
 fi
 
 if [[ ! -f "$moodle_repo/config.php" ]]; then

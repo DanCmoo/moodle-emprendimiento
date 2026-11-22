@@ -4,11 +4,16 @@ moodledata/
 config.php
 *.sql
 *.sql.gz
+contenido/
+Moodle-Copia.mbz
+Moodle-Emprendimiento-2026-3.mbz
 
 # Sistema/editor
 .DS_Store
 Thumbs.db
 .vscode/
+__pycache__/
+*.py[cod]
 
 # Copias temporales; la copia publicada vive solo en backups/curso-latest.mbz
 *.mbz
